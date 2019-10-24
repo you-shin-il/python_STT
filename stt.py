@@ -25,9 +25,14 @@ PORT = 4080
 
 def getMetadata():
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
-    message = CLIENT_ID + ':' + timestamp
 
+    #python 2.x
+    message = CLIENT_ID + ':' + timestamp
     signature = hmac.new(CLIENT_SECRET, message, hashlib.sha256).hexdigest()
+
+    # python 3.x
+    #message = CLIENT_ID + ':' + timestamp
+    #signature = hmac.new(bytes(CLIENT_SECRET, 'utf8'),bytes(message, 'utf8'), hashlib.sha256).hexdigest()
 
     metadata = [('x-auth-clientkey', CLIENT_KEY),
                 ('x-auth-timestamp', timestamp),
@@ -132,43 +137,6 @@ def print_rms(rms):
         print (out)
 
 def generate_request():
-
-    with MicrophoneStream(RATE, CHUNK) as stream:
-        audio_generator = stream.generator()
-
-        for content in audio_generator:
-            message = gigagenieRPC_pb2.reqVoice()
-            message.audioContent = content
-            yield message
-
-            rms = audioop.rms(content,2)
-            print_rms(rms)
-
-def file_request():
-    def play_file(fname):
-        # create an audio object
-        wf = wave.open(fname, 'rb')
-        p = pyaudio.PyAudio()
-        chunk = 1024
-
-        # open stream based on the wave object which has been input.
-        stream = p.open(format=p.get_format_from_width(wf.getsampwidth()),
-                        channels=wf.getnchannels(),
-                        rate=wf.getframerate(),
-                        output=True)
-
-        # read data (based on the chunk size)
-        data = wf.readframes(chunk)
-
-        # play stream (looping from beginning of file to the end)
-        while data != '':
-            # writing to the stream is what *actually* plays the sound.
-            stream.write(data)
-            data = wf.readframes(chunk)
-
-            # cleanup stuff.
-        stream.close()
-        p.terminate()
 
     with MicrophoneStream(RATE, CHUNK) as stream:
         audio_generator = stream.generator()
