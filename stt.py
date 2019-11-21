@@ -15,9 +15,9 @@ import hashlib
 import wave
 
 # Config for GiGA Genie gRPC
-CLIENT_KEY = 'Y2xpZW50X2tleTE1NzA2NzUzNjAwNDY='
-CLIENT_ID = 'Y2xpZW50X2lkMTU3MDY3NTM2MDA0Ng=='
-CLIENT_SECRET = 'Y2xpZW50X3NlY3JldDE1NzA2NzUzNjAwNDY='
+CLIENT_KEY = ''
+CLIENT_ID = ''
+CLIENT_SECRET = ''
 HOST = 'connector.gigagenie.ai'
 PORT = 4080
 
@@ -27,12 +27,12 @@ def getMetadata():
     timestamp = datetime.datetime.now().strftime("%Y%m%d%H%M%S%f")[:-3]
 
     #python 2.x
-    message = CLIENT_ID + ':' + timestamp
-    signature = hmac.new(CLIENT_SECRET, message, hashlib.sha256).hexdigest()
+    #message = CLIENT_ID + ':' + timestamp
+    #signature = hmac.new(CLIENT_SECRET, message, hashlib.sha256).hexdigest()
 
     # python 3.x
-    #message = CLIENT_ID + ':' + timestamp
-    #signature = hmac.new(bytes(CLIENT_SECRET, 'utf8'),bytes(message, 'utf8'), hashlib.sha256).hexdigest()
+    message = CLIENT_ID + ':' + timestamp
+    signature = hmac.new(bytes(CLIENT_SECRET, 'utf8'),bytes(message, 'utf8'), hashlib.sha256).hexdigest()
 
     metadata = [('x-auth-clientkey', CLIENT_KEY),
                 ('x-auth-timestamp', timestamp),
