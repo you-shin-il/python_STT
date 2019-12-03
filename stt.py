@@ -15,9 +15,9 @@ import hashlib
 import wave
 
 # Config for GiGA Genie gRPC
-CLIENT_KEY = ''
-CLIENT_ID = ''
-CLIENT_SECRET = ''
+CLIENT_ID = 'Y2xpZW50X2lkMTU3MDY3NTI5OTQ2NA=='
+CLIENT_KEY = 'Y2xpZW50X2tleTE1NzA2NzUyOTk0NjQ='
+CLIENT_SECRET = 'Y2xpZW50X3NlY3JldDE1NzA2NzUyOTk0NjQ='
 HOST = 'connector.gigagenie.ai'
 PORT = 4080
 
